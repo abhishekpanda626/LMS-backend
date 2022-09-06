@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +25,5 @@ Route::post('/login/user',[UserController::class,'userlogin']);
 Route::post('/register/admin',[AdminController::class,'adminreg']);
 Route::post('/login/admin',[AdminController::class,'adminlogin']);
 Route::get('/users',[UserController::class,'showusers']);
+Route::get('/books/display',[BookController::class,'display']);
+Route::post('/books/add',[BookController::class,'addBook']);
