@@ -32,4 +32,11 @@ class UserController extends Controller
         $user= new User;
         return $user::all();   
     }
+    function delete($id){
+        $result= User::where('id',$id)->delete();
+        if($result)
+        {
+            return ['result'=>"Student has been Removed."];
+        }
+    }
 }

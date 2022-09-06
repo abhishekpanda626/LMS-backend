@@ -24,4 +24,11 @@ class BookController extends Controller
         $book= new Book;
         return $book->all();
     }
+    function delete($id){
+        $result= Book::where('id',$id)->delete();
+        if($result)
+        {
+            return ['result'=>"Book has been Deleted."];
+        }
+    }
 }
