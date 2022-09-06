@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
-{
+{   
     use HasFactory;
     protected $fillable = [
         'title',
         'author',
         'genre',
-        'published_date'
+        'published_date',
+        'file_path'
     ];
    public $timestamps=false;
 }

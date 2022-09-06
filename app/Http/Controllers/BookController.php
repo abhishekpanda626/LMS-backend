@@ -14,6 +14,7 @@ class BookController extends Controller
         $book->author=$req->input('author');
         $book->genre=$req->input('genre');
         $book->published_date=$req->input('published_date');
+        $book->file_path=$req->file('image')->store('book');
         $book->save();
         return $book;
       //return $req->input();
