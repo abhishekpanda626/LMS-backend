@@ -15,7 +15,9 @@ use App\Http\Controllers\BookController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::middleware('auth:api')->group(function () {
+    
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 
@@ -29,3 +31,7 @@ Route::get('/books/display',[BookController::class,'display']);
 Route::post('/books/add',[BookController::class,'addBook']);
 Route::delete('/books/delete/{id}',[BookController::class,'delete']);
 Route::delete('users/delete/{id}',[UserController::class,'delete']);
+Route::get('/books/{id}',[BookController::class,'getBook']);
+Route::put('/books/update/{id}',[BookController::class,'update']);
+Route::put('/users/update/{id}',[UserController::class,'update']);
+Route::get('/users/get/{id}',[UserController::class,'getUser']);

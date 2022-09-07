@@ -71,7 +71,8 @@ return [
 
     'links' => [
 
-        public_path('book') => storage_path('app/book'),        
+        public_path('book') => storage_path('app/book'), 
+        public_path('user') => storage_path('app/user'),        
         
     ],
 
