@@ -9,6 +9,19 @@ class BookController extends Controller
 {
     function addBook(Request $req)
     {
+
+        $validator= Validator::make($req->all(),[
+            'title' => 'required|min:2|',
+            'author' => 'required|alpha',
+            'genre' => 'required|alpha',
+            'published_date' =>'required|date',
+            'file_path' =>'required|file'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['validate_err'=>$validator->messages()]);
+        }
+
         $book=new Book;
         $book->title=$req->input('title');
         $book->author=$req->input('author');
@@ -41,24 +54,23 @@ class BookController extends Controller
     }
     function update($id, Request $req)
     {
+        $validator= Validator::make($req->all(),[
+            'title' => 'required|min:2|',
+            'author' => 'required|alpha',
+            'genre' => 'required|alpha',
+            'published_date' =>'required|date',
+            'file_path' =>'required|file'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['validate_err'=>$validator->messages()]);
+        }
         $book= Book::find($id);
-        if($req->input('title'))
-        {
+        
             $book->title=$req->input('title');
-        }
-        if($req->input('author'))
-        {
             $book->author=$req->input('author');
-        }
-        if($req->input('genre'))
-        {
             $book->genre=$req->input('genre');
-        }
-        if($req->input('published_date'))
-        {
             $book->published_date=$req->input('published_date');
-        }
-       
         if($req->file('image'))
         {
             $book->file_path=$req->file('image')->store('book');

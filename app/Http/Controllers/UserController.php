@@ -6,10 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
 class UserController extends Controller
 {
     function register(Request $req)
     {
+       $validator= Validator::make($req->all(),[
+            'name' => 'required|min:3|unique',
+            'contact_no' => 'required|numeric|min:10',
+            'email' => 'required|email',
+            'password' =>'required',
+            'file_path' =>'required|file'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['validate_err'=>$validator->messages()]);
+        }
         $user=new User;
         $user->name=$req->input('name');
         $user->contact_no=$req->input('contact_no');        
@@ -17,16 +30,21 @@ class UserController extends Controller
         $user->password=Hash::make($req->input('password'));
         $user->file_path=$req->file('file_path')->store('user');
         $user->save();
+        //$responseArray['token']=$user->createToken['Signup']->accessT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        oken;
+        //$responseArray['name']=$user->name
         return $user;
     }
-
-
     function userlogin(Request $req)
-    {   $validator=Validator::make($req->all(),[
-        'email'=>'required|email',
-        'password'=>'required',
-    ]);
-        $token=$user->createToken('Token')->accessToken;    
+    {
+        $validator= Validator::make($req->all(),[
+            'email'=> 'required|email',
+            'password'=>'required'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['validate_err'=>$validator->messages()]);
+        }
+
         $user=User::where('email',$req->email)->first();
         if(!$user || !Hash::check($req->password,$user->password))
         {
@@ -34,7 +52,11 @@ class UserController extends Controller
                 'error'=>["Email or password doesn't match"]
             ]);
         }
-        return $user;
+        else{
+            $token = $user->createToken('my-app-token')->accessToken;
+             return $user;
+        }
+        
     }
     function showusers(Request $req)
     {
@@ -54,30 +76,34 @@ class UserController extends Controller
     }
     function update($id, Request $req)
     {
+        $validator= Validator::make($req->all(),[
+            'name' => 'min:3',
+            'email' => 'email',
+            'contact_no'=>'numeric|min:10',
+            'password'=>'required',
+            'file_path' =>'file'
+        ]);
+        if($validator->fails())
+        {
+            return response()->json(['validate_err'=>$validator->messages()]);
+        }
         $user= User::find($id);
-        if($req->input('name'))
-        {
+           
             $user->name=$req->input('name');
-        }
-        if($req->input('contact_no'))
-        {
             $user->contact_no=$req->input('contact_no');
-        }
-        if($req->input('email'))
-        {
             $user->email=$req->input('email');
-        }
-        if($req->input('password'))
-        {
-            $user->password=$req->input('password');
-        }
+            $user->password=Hash::make($req->input('password'));
+        if($req->file('image'))
+            {$user->file_path=$req->file('image')->store('user');}
+        
+        
+            $user->save();
+                         
        
-        // if($req->file('image'))
-        // {
-        //     $user->file_path=$req->file('image')->store('user');
-        // }
-       
-        $user->save();
         return $user;
+    }
+    function searchUser($id)
+    {
+        return "hello";
     }
 }
