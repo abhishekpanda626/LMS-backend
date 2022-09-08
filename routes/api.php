@@ -25,6 +25,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->group(function () {
     Route::get('/books/display',[BookController::class,'display']);
 });
+
+
+
 Route::post('/register/user',[UserController::class,'register']);
 Route::post('/login/user',[UserController::class,'userlogin']);
 Route::post('/register/admin',[AdminController::class,'adminreg']);
