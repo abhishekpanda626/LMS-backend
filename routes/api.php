@@ -15,25 +15,18 @@ use App\Http\Controllers\BookController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//  Route::group(['middleware'=>'auth:api'],function () {
-    
-// });
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::middleware('auth:api')->group(function () {
+ Route::group(['middleware'=>'auth:api'],function () {
     Route::get('/books/display',[BookController::class,'display']);
 });
 
-
-
+// Route::middleware('auth:api')->group(function () {
+    
+// });
 Route::post('/register/user',[UserController::class,'register']);
 Route::post('/login/user',[UserController::class,'userlogin']);
 Route::post('/register/admin',[AdminController::class,'adminreg']);
 Route::post('/login/admin',[AdminController::class,'adminlogin']);
 Route::get('/users',[UserController::class,'showusers']);
-
 Route::post('/books/add',[BookController::class,'addBook']);
 Route::delete('/books/delete/{id}',[BookController::class,'delete']);
 Route::delete('users/delete/{id}',[UserController::class,'delete']);
@@ -41,4 +34,6 @@ Route::get('/books/{id}',[BookController::class,'getBook']);
 Route::put('/books/update/{id}',[BookController::class,'update']);
 Route::put('/users/update/{id}',[UserController::class,'update']);
 Route::get('/users/get/{id}',[UserController::class,'getUser']);
-Route::get('users/search/',[UserController::class,'searchUser']);
+Route::get('/users/search/{key}',[UserController::class,'searchUser']);
+Route::get('/books/search/{id}',[BookController::class,'findBook']);
+

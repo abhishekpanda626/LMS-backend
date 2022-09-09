@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
-
+use Illuminate\Support\Facades\Validator;
 class BookController extends Controller
 {
     function addBook(Request $req)
@@ -15,7 +15,7 @@ class BookController extends Controller
             'author' => 'required|alpha',
             'genre' => 'required|alpha',
             'published_date' =>'required|date',
-            'file_path' =>'required|file'
+            'file_path' => 'image'
         ]);
         if($validator->fails())
         {
@@ -55,11 +55,11 @@ class BookController extends Controller
     function update($id, Request $req)
     {
         $validator= Validator::make($req->all(),[
-            'title' => 'required|min:2|',
-            'author' => 'required|alpha',
-            'genre' => 'required|alpha',
+            'title' => 'required|min:2|unique:books',
+            'author' => 'required',
+            'genre' => 'required',
             'published_date' =>'required|date',
-            'file_path' =>'required|file'
+            'file_path' => 'required',
         ]);
         if($validator->fails())
         {
@@ -79,4 +79,6 @@ class BookController extends Controller
         $book->save();
         return $book;
     }
+    
+  
 }

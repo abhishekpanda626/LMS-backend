@@ -13,11 +13,12 @@ class UserController extends Controller
     function register(Request $req)
     {
        $validator= Validator::make($req->all(),[
-            'name' => 'required|min:3|unique',
-            'contact_no' => 'required|numeric|min:10',
-            'email' => 'required|email',
+            'name' => 'required|min:3|unique:users',
+            'contact_no' => 'required|numeric',
+            'email' => 'required|email|unique:users',
             'password' =>'required',
-            'file_path' =>'required|file'
+            'file_path'=>'required'
+            
         ]);
         if($validator->fails())
         {
@@ -30,8 +31,7 @@ class UserController extends Controller
         $user->password=Hash::make($req->input('password'));
         $user->file_path=$req->file('file_path')->store('user');
         $user->save();
-        //$responseArray['token']=$user->createToken['Signup']->accessT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        oken;
-        //$responseArray['name']=$user->name
+         //$token = $user->createToken('signup-token')->accessToken;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      oken;
         return $user;
     }
     function userlogin(Request $req)
@@ -42,19 +42,19 @@ class UserController extends Controller
         ]);
         if($validator->fails())
         {
-            return response()->json(['validate_err'=>$validator->messages()]);
+            return response()->json(['validate_err'=>$validator->messages()],202);
         }
-
         $user=User::where('email',$req->email)->first();
         if(!$user || !Hash::check($req->password,$user->password))
         {
-            return response([
+            return response()->json([
                 'error'=>["Email or password doesn't match"]
-            ]);
+            ],206);
         }
-        else{
-            $token = $user->createToken('my-app-token')->accessToken;
-             return $user;
+        else
+        {
+            $token = $user->createToken('user-token')->accessToken;
+            return $user;
         }
         
     }
