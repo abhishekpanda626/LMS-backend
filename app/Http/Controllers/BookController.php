@@ -12,8 +12,8 @@ class BookController extends Controller
 
         $validator= Validator::make($req->all(),[
             'title' => 'required|min:2|',
-            'author' => 'required|alpha',
-            'genre' => 'required|alpha',
+            'author' => 'required',
+            'genre' => 'required',
             'published_date' =>'required|date',
             'file_path' => 'image'
         ]);
@@ -56,7 +56,7 @@ class BookController extends Controller
     {
         $validator= Validator::make($req->all(),[
             'title' => 'required|min:2|unique:books',
-            'author' => 'required',
+            'author' => 'required|',
             'genre' => 'required',
             'published_date' =>'required|date',
             'file_path' => 'required',
