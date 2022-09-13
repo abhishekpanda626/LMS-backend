@@ -28,7 +28,7 @@ class AdminController extends Controller
         $admin->password=Hash::make($req->input('password'));
         $admin->file_path=$req->file('file_path')->store('user');
         $admin->save();
-        $token = $admin->createToken('admin-token')->accessToken;
+        $token = $admin->createToken('signup-token')->accessToken;
         return $admin;
         
     }
@@ -49,7 +49,7 @@ class AdminController extends Controller
                 'error'=>["Email or password doesn't match"]
             ],206);
         }
-            $token = $admin->createToken('admin-token')->accessToken;
+            $token = $admin->createToken('login-token')->accessToken;
             return $admin;
 
        
