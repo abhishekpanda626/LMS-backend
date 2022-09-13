@@ -82,7 +82,7 @@ class UserController extends Controller
             'contact_no'=>'numeric|min:10',
             'password'=>'required',
             'file_path' =>'file',
-            'book_id'=>'required'
+            
         ]);
         if($validator->fails())
         {

@@ -20,5 +20,9 @@ class Book extends Model
    {
        return $this->hasMany(User::class);
    }
+   public function books_users()
+   {
+       return $this->hasMany(books_users::class);
+   }
    public $timestamps=false;
 }

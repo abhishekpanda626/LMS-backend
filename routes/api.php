@@ -39,4 +39,5 @@ Route::get('/users/get/{id}',[UserController::class,'getUser']);
 Route::get("find/{name}",[UserController::class,'searchUser']);
 Route::get('/books/search/{id}',[BookController::class,'findBook']);
 Route::post('/books/assign',[BooksUsersController::class,'assign']);
-
+Route::delete('/delete/{id}',[BooksUsersController::class,'delete']);
+Route::get('/show/{user_id}',[BooksUsersController::class,'show']);

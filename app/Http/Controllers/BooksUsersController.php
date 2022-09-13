@@ -14,4 +14,19 @@ class BooksUsersController extends Controller
         $assign->save();
         return $assign->all();
    }
+   function delete($id){
+    $result= books_users::where('id',$id)->delete();
+    if($result)
+    {
+        return ['result'=>"Book has been returned."];
+    }
+    else
+    {
+        return['result'=>"Operation Failed"];
+    }
+}
+function show($user_id)
+{
+    return with(books_users::where('user_id','LIKE',"%$user_id%")->get());  
+}
 }
