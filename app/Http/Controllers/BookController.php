@@ -56,7 +56,7 @@ class BookController extends Controller
     {
         $validator= Validator::make($req->all(),[
             'title' => 'required|min:2|unique:books',
-            'author' => 'required|',
+            'author' => 'required',
             'genre' => 'required',
             'published_date' =>'required|date',
             'file_path' => 'required',
@@ -80,5 +80,9 @@ class BookController extends Controller
         return $book;
     }
     
-  
+    public  function findBook( $title)
+    {
+        return Book::where('title','LIKE',"%$title%")->get();
+    }
+
 }

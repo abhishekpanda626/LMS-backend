@@ -22,6 +22,7 @@ class User extends Authenticatable
         'password',
         'contact_no',
         'file_path',
+        'book_id'
     ];
 
     /**
@@ -42,5 +43,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    protected $with=['book'];
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
     
 }

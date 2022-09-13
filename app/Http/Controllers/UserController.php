@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Book;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -60,8 +61,8 @@ class UserController extends Controller
     }
     function showusers(Request $req)
     {
-        $user= new User;
-        return $user::all();   
+      
+        return User::with('user.book');   
     }
     function delete($id){
         $result= User::where('id',$id)->delete();
@@ -102,8 +103,8 @@ class UserController extends Controller
        
         return $user;
     }
-    function searchUser($id)
+  public  function searchUser( $name)
     {
-        return "hello";
+        return User::where('name','LIKE',"%$name%")->get();
     }
 }

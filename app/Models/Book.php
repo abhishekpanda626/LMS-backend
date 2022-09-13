@@ -15,5 +15,10 @@ class Book extends Model
         'published_date',
         'file_path'
     ];
+
+   public function user()
+   {
+       return $this->hasMany(User::class);
+   }
    public $timestamps=false;
 }
