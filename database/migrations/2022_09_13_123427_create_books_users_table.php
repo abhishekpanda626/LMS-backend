@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('books_users', function (Blueprint $table) {
-
-            
+        Schema::create('books_users', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-         
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('books_users');
     }
 };
