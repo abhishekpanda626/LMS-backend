@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BooksUsersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,4 +38,5 @@ Route::put('/users/update/{id}',[UserController::class,'update']);
 Route::get('/users/get/{id}',[UserController::class,'getUser']);
 Route::get("find/{name}",[UserController::class,'searchUser']);
 Route::get('/books/search/{id}',[BookController::class,'findBook']);
+Route::post('/books/assign',[BooksUsersController::class,'assign']);
 
